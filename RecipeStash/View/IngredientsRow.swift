@@ -6,30 +6,53 @@
 //
 
 import SwiftUI
+import Foundation
 
 struct IngredientsRow: View {
     var foodData: Food
     
     var body: some View {
-        ZStack {
-            Rectangle()
-                .fill(Color.white)
-                .frame(width: 220, height: 270)
-                .cornerRadius(30)
-                .padding(.top, 94)
-                .shadow(color: Color("shadow"), radius: 10, x: 5, y: 15)
-            
-            Image(foodData.name)
-                .resizable()
-                .frame(width: 168, height: 189)
-                .cornerRadius(20)
-                .padding(.top, 52)
-                .padding(.bottom, 173)
-            
-            Text(foodData.name)
-                .font(.title3)
-                .bold()
-                .padding(.top, 140)
+        ScrollView(.horizontal, showsIndicators: false) {
+            LazyHStack(spacing: 20) {
+                let ingredients = foodData.ingredients
+                ForEach(ingredients, id: \.name) { data in
+                    ZStack(alignment: .top) {
+                        Rectangle()
+                            .fill(Color("background"))
+                            .frame(width: 114, height: 157)
+                            .cornerRadius(20)
+                            .shadow(color: Color("shadow"), radius: 4, x: 2, y: 10)
+                            .padding(.top, 38)
+                        
+                        Image(data.name)
+                            .resizable()
+                            .frame(width: 88, height: 98)
+                            .cornerRadius(20)
+                        
+                        Text(data.name)
+                            .font(.headline)
+                            .bold()
+                            .padding(.top, 106)
+                            .frame(width: 84, alignment: .center)
+                            .multilineTextAlignment(.center)
+                        
+                        Text(data.amount)
+                            .font(.headline)
+                            .bold()
+                            .padding(.top, 146)
+                            .foregroundColor(Color("primary"))
+                            .frame(width: 84,alignment: .center)
+                            .multilineTextAlignment(.center)
+                    }
+                }
+            }.padding(.leading, 40)
         }
     }
 }
+
+struct IngredientsRow_Previews: PreviewProvider {
+    static var previews: some View {
+        IngredientsRow(foodData: foodItems[8])
+    }
+}
+

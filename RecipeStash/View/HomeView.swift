@@ -10,35 +10,38 @@ import SwiftUI
 struct HomeView: View {
     var body: some View {
         NavigationView {
-            ZStack(alignment: .topLeading) {
-                Color("background")
+            ScrollView(.vertical, showsIndicators: false) {
+                Color("background").edgesIgnoringSafeArea(.all)
                 
-                VStack(alignment:.leading) {
-                    Text("Delicious \nfood for you")
-                        .font(.largeTitle)
-                        .bold()
-                        .padding(.top, 92)
-                        .padding(.leading, 50)
-                    
-                    SearchBar(text: .constant(""))
-                        .padding(.top, 28)
-                        .padding(.leading, 50)
-                    
-                    List(foodItems, id: \.id) { food in
+                ZStack(alignment: .topLeading) {
+                    VStack(alignment:.leading) {
+                        Text("Delicious \nfood for you")
+                            .font(.largeTitle)
+                            .bold()
+                            .padding(.top, 92)
+                            .padding(.leading, 50)
+                        
+                        SearchBar(text: .constant(""))
+                            .padding(.top, 28)
+                            .padding(.leading, 50)
+                        
                         ScrollView(.horizontal, showsIndicators: false) {
-                            HStack {
-                                NavigationLink(destination: DetailFoodView(foodData: food)) {
-                                    FoodRow(foodData: food)
+                            LazyHStack {
+                                ForEach(foodItems, id: \.id) { food in
+                                    NavigationLink(destination: DetailFoodView(foodData: food)) {
+                                        FoodRow(foodData: food)
+                                            .padding(.leading, 50)
+                                    }
                                 }
                             }
                         }
-                        .ignoresSafeArea(.all)
                     }
                 }
             }.ignoresSafeArea(.all)
         }
     }
 }
+
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {

@@ -17,7 +17,7 @@ struct FoodRow: View {
                 .frame(width: 220, height: 270)
                 .cornerRadius(30)
                 .padding(.top, 94)
-                .shadow(color: Color("shadow"), radius: 10, x: 5, y: 15)
+                .shadow(color: Color("shadow"), radius: 5, x: 0, y: 10)
             
             Image(foodData.name)
                 .resizable()
@@ -29,13 +29,16 @@ struct FoodRow: View {
             Text(foodData.name)
                 .font(.title3)
                 .bold()
-                .padding(.top, 140)
+                .padding(.top, 160)
+                .frame(width: 180, alignment: .center)
+                .multilineTextAlignment(.center)
+                .foregroundColor(.black)
         }
     }
 }
 
 struct FoodRow_Previews: PreviewProvider {
     static var previews: some View {
-        FoodRow(foodData: foodItems[0])
+        FoodRow(foodData: foodItems[1])
     }
 }
